@@ -1,0 +1,213 @@
+<div class="main">
+  <div class="sidebar">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="bold">Storage</label>
+        <ngx-slider
+          class="custom-slider"
+          [(value)]="minValue"
+          [(highValue)]="maxValue"
+          [options]="options"
+        ></ngx-slider>
+      </div>
+      <div class="col-md-6">
+        <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+          <label class="bold">Hard Disk Type</label>
+          <select
+            class="form-control"
+            id="disk-type"
+            formControlName="disk_type"
+          >
+            <option value=""></option>
+            <option value="SAS">SAS</option>
+            <option value="SATA">SATA</option>
+            <option value="SSD">SSD</option>
+          </select>
+          <br />
+          <label class="bold">Ram</label>
+          <div class="form-check">
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="2GB"
+                    />2GB</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="4GB"
+                    />4GB</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="8GB"
+                    />8GB</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="12GB"
+                    />12GB</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="16GB"
+                    />16GB</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="24GB"
+                    />24GB</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="32GB"
+                    />32GB</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="48GB"
+                    />48GB</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="64GB"
+                    />64GB</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-check-label"
+                    ><input
+                      (change)="changeRamValues($event)"
+                      class="form-check-input"
+                      type="checkbox"
+                      value="96GB"
+                    />96GB</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <label class="bold">Location</label>
+          <select
+            class="form-control"
+            id="disk-type"
+            formControlName="location"
+            [(ngModel)]="location"
+          >
+            <option value=""></option>
+            <option *ngFor="let item of locations" value="{{ item }}">
+              {{ item }}
+            </option>
+          </select>
+          <br />
+          <button type="submit" class="btn btn-danger btn-block btn-round">
+            Search
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Model</th>
+          <th scope="col">RAM</th>
+          <th scope="col">HDD</th>
+          <th scope="col">Location</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template [ngIf]="!isLoading">
+          <ng-template [ngIf]="!isLoading && servers.length == 0">
+            <tr>
+              <td colspan="6">No servers found.</td>
+            </tr>
+          </ng-template>
+          <tr *ngFor="let server of servers; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ server[0] }}</td>
+            <td>{{ server[1] }}</td>
+            <td>{{ server[2] }}</td>
+            <td>{{ server[3] }}</td>
+            <td>{{ server[4] }}</td>
+          </tr>
+        </ng-template>
+        <ng-template [ngIf]="isLoading">
+          <tr>
+            <td colspan="6">Searching...</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>

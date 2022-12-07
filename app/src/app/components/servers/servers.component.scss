@@ -1,0 +1,16 @@
+.sidebar {
+  padding: 20px;
+  background-color: burlywood;
+}
+.bold {
+  font-weight: bold;
+}
+
+::ng-deep {
+  ngx-slider.custom-slider .ngx-slider-ticks .ngx-slider-inner-tooltip {
+    display: none;
+  }
+}
+.body {
+  padding: 20px 100px;
+}
